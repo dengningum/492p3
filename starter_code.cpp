@@ -128,10 +128,25 @@ public:
 
     // Define Test function
     int test(map <int, double>& prior, map <string, map<int, double>>& condprob, unordered_set<int>& all_labels, string testfilename){
+        return 0;
     }
 };
 
+inline vector<string> glob(const string& pat){
+    glob_t glob_result;
+    glob(pat.c_str(),GLOB_TILDE,NULL,&glob_result);
+    vector<string> ret;
+    for(unsigned int i=0;i<glob_result.gl_pathc;++i){
+        ret.push_back(string(glob_result.gl_pathv[i]));
+    }
+    globfree(&glob_result);
+    return ret;
+}
+
 int main(int argc, char** argv) {
+    PreProcess p;
+    vector<string> text = p.my_glob(train_test_dir + "*train*");
+    cout << text.size() << " " << text[0] << endl;
     return 0;
 }
 
